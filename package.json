@@ -1,0 +1,22 @@
+{
+  "name": "spanish-freq",
+  "version": "1.0.0",
+  "description": "just messing around with spanish words",
+  "main": "node/index.ts",
+  "scripts": {
+    "load_raw_data": "ts-node node/scripts/download-freq-list.ts",
+    "agg_lemma": "ts-node node/scripts/agg-lemma-forms.ts"
+  },
+  "author": "david.j.houseknecht@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
+    "ts-node": "^10.4.0"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.30",
+    "@types/request-promise": "^4.1.48"
+  }
+}
