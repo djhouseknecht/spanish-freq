@@ -1,11 +1,14 @@
 {
   "name": "spanish-freq",
   "version": "1.0.0",
-  "description": "just messing around with spanish words",
+  "description": "Just messing around with spanish words",
   "main": "node/index.ts",
   "scripts": {
     "load_raw_data": "ts-node node/scripts/download-freq-list.ts",
     "agg_lemma": "ts-node node/scripts/agg-lemma-forms.ts"
+  },
+  "repository": {
+    "url": "https://github.com/djhouseknecht/spanish-freq"
   },
   "author": "david.j.houseknecht@gmail.com",
   "license": "ISC",
