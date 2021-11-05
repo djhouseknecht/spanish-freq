@@ -1,9 +1,9 @@
 import fs from 'fs';
 
-import { IFreqSchema, ILemmaSchema, ILemmaFormAgg } from '../interfaces';
+import { IFreqSchema, ILemmaSchema, ILemmaFormAgg } from '../src/app/shared/interfaces';
 
 function loadRawData (): IFreqSchema {
-  return JSON.parse(fs.readFileSync('node/agg_data/Spanish1-10000.json').toString());
+  return JSON.parse(fs.readFileSync('src/assets/agg_data/Spanish1-10000.json').toString());
 }
 
 function saveOutput (filename: string, data: ILemmaSchema): void {
@@ -91,7 +91,7 @@ function run () {
   const sortedSchema = sortByOccurrences(lemmaSchema);
   const rankedSchema = rankLemmas(sortedSchema);
 
-  saveOutput('node/agg_data/SpanishLemmasAgg.json', rankedSchema);
+  saveOutput('src/assets/agg_data/SpanishLemmasAgg.json', rankedSchema);
   // console.log('finished with schema and sorting', rankedSchema);
 
   // for (let i = 0; i < wordsToAgg.length; i++) {
