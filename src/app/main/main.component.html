@@ -15,9 +15,9 @@
 
 <mat-tab-group mat-align-tabs="center"  [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="tabChanged($event)">
   <mat-tab label="Lemma Forms">
-    <sf-lemma-freq [activeTab]="activeTab$"></sf-lemma-freq>
+    <sf-lemma-list [activeTab]="activeTab$"></sf-lemma-list>
   </mat-tab>
   <mat-tab label="Conjugated Words">
-    <sf-word-freq [activeTab]="activeTab$"></sf-word-freq>
+    <sf-word-list [activeTab]="activeTab$"></sf-word-list>
   </mat-tab>
 </mat-tab-group>

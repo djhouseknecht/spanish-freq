@@ -14,10 +14,11 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 
 import { AppComponent } from './app.component';
-import { LemmaFreqComponent } from './lemma-freq/lemma-freq.component';
-import { WordFreqComponent } from './word-freq/word-freq.component';
+import { LemmaFreqComponent } from './lemma-list/lemma-list.component';
+import { WordFreqComponent } from './word-list/word-list.component';
 import { ListPipe } from './pipes/list.pipe';
 import { MainComponent } from './main/main.component';
+import { LemmaComponent } from './lemma/lemma.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MainComponent } from './main/main.component';
     LemmaFreqComponent,
     WordFreqComponent,
     ListPipe,
-    MainComponent
+    MainComponent,
+    LemmaComponent
   ],
   imports: [
     BrowserModule,

@@ -1,26 +1,25 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-
-import { HrefToUse, ILemmaFormAgg, ILemmaSchema } from '../shared/interfaces';
-import { DataService } from '../core/data.service';
-import { Subject, takeUntil, Observable, combineLatest, filter, switchMap, map } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, Subject, combineLatest, filter, switchMap, takeUntil } from 'rxjs';
+import { DataService } from '../core/data.service';
+import { IWordSchema } from '../shared/interfaces';
 
 @Component({
-  selector: 'sf-lemma-freq',
-  templateUrl: './lemma-freq.component.html',
-  styleUrls: ['./lemma-freq.component.scss']
+  selector: 'sf-word-list',
+  templateUrl: './word-list.component.html',
+  styleUrls: ['./word-list.component.scss']
 })
-export class LemmaFreqComponent implements OnInit, AfterViewInit {
-  lemmas!: ILemmaFormAgg[];
+export class WordFreqComponent implements OnInit {
+  words!: IWordSchema[];
   @Input() activeTab!: Observable<'lemmas' | 'words'>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  dataSource!: MatTableDataSource<ILemmaFormAgg>;
-  displayedColumns: Array<keyof ILemmaFormAgg> = ['rank', 'word', 'total_conjugated_occurrences', 'conjugations'];
+  dataSource!: MatTableDataSource<IWordSchema>;
+  displayedColumns: Array<keyof IWordSchema> = ['rank', 'word', 'occurrences', 'lemma_forms'];
 
   currentSearch?: string | null;
 
@@ -35,7 +34,7 @@ export class LemmaFreqComponent implements OnInit, AfterViewInit {
     ])
       .pipe(
         filter(([params, activeTab]) => {
-          if (activeTab === 'lemmas' && params.get('search') !== this.currentSearch) {
+          if (activeTab === 'words' && params.get('search') !== this.currentSearch) {
             return true;
           }
           return false;
@@ -43,14 +42,15 @@ export class LemmaFreqComponent implements OnInit, AfterViewInit {
         switchMap(([params, activeTab]) => {
           const search = params.get('search');
           this.currentSearch = search;
-          console.log('fetching lemmas for component', { search, activeTab });
-          return this.data.getSpanishLemmas$(params.get('search'));
+          console.log('fetching words for component', { search, activeTab });
+          return this.data.getSpanishWords$(params.get('search'));
         }),
         takeUntil(this.endSubs$)
       )
-      .subscribe(lemmas => {
-        this.lemmas = lemmas;
-        this.dataSource = new MatTableDataSource<ILemmaFormAgg>(this.lemmas);
+      .subscribe(words => {
+        this.words = words;
+        words[0].occurrences
+        this.dataSource = new MatTableDataSource<IWordSchema>(this.words);
         this.ngAfterViewInit();
       });
   }
