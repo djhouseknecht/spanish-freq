@@ -35,3 +35,13 @@ According to Wikitionary,
 * https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Spanish7001-8000
 * https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Spanish8001-9000
 * https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Spanish9001-10000
+
+### Running Feature List
+- [ ] Deploy app to Github pages
+    * May need scully
+- [ ] Add routes for lemma/word list tabs
+- [ ] Write Lemma Page
+- [ ] Write Word page
+- [ ] Write about page
+- [ ] Write modal for multiple words on a lemma
+- [ ] Add better character search

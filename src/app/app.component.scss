@@ -1,0 +1,16 @@
+@import '../mixins.scss';
+
+:host {
+  display: flex;
+  flex-direction: column;
+
+  margin: auto;
+  width: 100%;
+
+  @include for-tablet-portrait-up {
+    width: 500px;
+  }
+  @include for-tablet-landscape-up {
+    width: 600px;
+  }
+}

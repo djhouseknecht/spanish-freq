@@ -1,0 +1,40 @@
+.demo-table {
+  width: 100%;
+}
+
+.mat-header-row {
+  font-weight: 700px;
+  font-size: 20px;
+}
+
+.mat-column-rank {
+  width: 32px;
+  border-right: 1px solid currentColor;
+  padding-right: 24px;
+  text-align: center;
+}
+
+.mat-column-word {
+  padding-left: 16px;
+  font-weight: bold;
+  font-size: 20px;
+  min-width: 46px;
+}
+
+.mat-column-conjugations_count {
+  // font-style: italic;
+  // width: px;
+  text-align: right;
+}
+
+.mat-column-total_conjugated_occurrences {
+  // font-style: italic;
+  // width: px;
+  text-align: right;
+}
+
+.mat-column-conjugations {
+  // width: 32px;
+  text-align: right;
+  // font-weight: bold;
+}

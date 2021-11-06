@@ -1,0 +1,20 @@
+<div class="options">
+  <h2>Spanish Word Frequency</h2>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Search for a Word</mat-label>
+    <input type="text" matInput [formControl]="searchControl" (keyup.enter)="search()" (blur)="search()">
+  </mat-form-field>
+  <div class="buttons">
+    <button (click)="search(true)" class="clear-btn" mat-raised-button type="button">Clear Search</button>
+    <button (click)="search()" class="search-btn" mat-raised-button color="primary" type="button">Search</button>
+  </div>
+</div>
+
+<mat-tab-group mat-align-tabs="center"  [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="tabChanged($event)">
+  <mat-tab label="Lemma Forms">
+    <sf-lemma-freq [activeTab]="activeTab$"></sf-lemma-freq>
+  </mat-tab>
+  <mat-tab label="Conjugated Words">
+    <sf-word-freq [activeTab]="activeTab$"></sf-word-freq>
+  </mat-tab>
+</mat-tab-group>

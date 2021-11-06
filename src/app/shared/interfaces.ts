@@ -21,5 +21,7 @@ export interface ILemmaSchema {
 export interface ILemmaFormAgg extends IWord {
   rank: number;
   total_conjugated_occurrences: number;
-  conjugations: Array<IWord>;
+  conjugations: Array<IWordSchema>;
 }
+
+export type HrefToUse = 'spanish_dict_href' | 'wiktionary_href';
