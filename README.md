@@ -37,7 +37,7 @@ According to Wikitionary,
 * https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Spanish9001-10000
 
 ### Running Feature List
-- [ ] Deploy app to Github pages
+- [ x ] Deploy app to Github pages
     * May need scully
 - [ x ] Add routes for lemma/word list tabs
 - [ ] Write Lemma Page
