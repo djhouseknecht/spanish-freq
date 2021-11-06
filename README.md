@@ -39,7 +39,7 @@ According to Wikitionary,
 ### Running Feature List
 - [ ] Deploy app to Github pages
     * May need scully
-- [ ] Add routes for lemma/word list tabs
+- [ x ] Add routes for lemma/word list tabs
 - [ ] Write Lemma Page
 - [ ] Write Word page
 - [ ] Write about page

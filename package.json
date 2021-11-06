@@ -7,6 +7,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --output-path=docs --baseHref=\"https://djhouseknecht.github.io/spanish-freq/\"",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "load_raw_data": "ts-node --project server/tsconfig.json server/download-freq-list.ts",
