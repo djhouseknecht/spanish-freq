@@ -44,7 +44,7 @@ export class LemmaFreqComponent implements OnInit, AfterViewInit {
           const search = params.get('search');
           this.currentSearch = search;
           console.log('fetching lemmas for component', { search, activeTab });
-          return this.data.getSpanishLemmas$(params.get('search'));
+          return this.data.getLemmas$(params.get('search'));
         }),
         takeUntil(this.endSubs$)
       )

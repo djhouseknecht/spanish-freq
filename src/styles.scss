@@ -5,3 +5,42 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 table {
   width: 100%;
 }
+
+h1 {
+  font-weight: 900;
+}
+
+.padded {
+  max-width: calc(100% - 12px);
+  padding: 12px;
+}
+
+.word-table {
+  width: 100%;
+}
+
+.mat-header-row {
+  font-weight: 700px;
+  font-size: 20px;
+}
+
+.mat-column-rank {
+  width: 32px;
+  border-right: 1px solid currentColor;
+  padding-right: 24px !important;
+  text-align: center;
+}
+
+.mat-column-word {
+  padding-left: 16px !important;
+  font-weight: bold;
+  font-size: 20px;
+  min-width: 46px;
+}
+
+.mat-column-total_conjugated_occurrences,
+.mat-column-occurrences,
+.mat-column-lemma_forms,
+.mat-column-conjugations {
+  text-align: right !important;
+}

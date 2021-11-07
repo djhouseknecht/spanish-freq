@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, of, tap } from 'rxjs';
+import { map, Observable, of, tap, switchMap } from 'rxjs';
 
 import {
   IFreqSchema,
@@ -34,16 +34,28 @@ export class DataService {
 
   constructor (private http: HttpClient) { }
 
-  getSpanishWords$ (search?: string | null): Observable<IWordSchema[]> {
+  getWords$ (search?: string | null): Observable<IWordSchema[]> {
     return this._getSpanishWords$().pipe(
       map(words => this._filter(words, search))
     )
   }
 
-  getSpanishLemmas$ (search?: string | null): Observable<ILemmaFormAgg[]> {
+  getLemmas$ (search?: string | null): Observable<ILemmaFormAgg[]> {
     return this._getSpanishLemmas$().pipe(
       map(lemmas => this._filter(lemmas, search))
     )
+  }
+
+  getWord$ (word: string): Observable<IWordSchema> {
+    return this.getWords$().pipe(
+      switchMap(_ => of(this.cache.wordsSchema![word]))
+    );
+  }
+
+  getLemma$ (lemma: string): Observable<ILemmaFormAgg> {
+    return this.getLemmas$().pipe(
+      switchMap(_ => of(this.cache.lemmasSchema![lemma]))
+    );
   }
 
   private _getSpanishWords$ (): Observable<IWordSchema[]> {
@@ -52,7 +64,7 @@ export class DataService {
     }
     return this.http.get<IFreqSchema>(this.wordsUrl).pipe(
       tap(schema => {
-        this.cache.wordsSchema;
+        this.cache.wordsSchema = schema;
         this.cache.wordsArray = Object.values(schema);
       }),
       map(_ => this.cache.wordsArray)
@@ -65,7 +77,7 @@ export class DataService {
     }
     return this.http.get<ILemmaSchema>(this.lemmaUrl).pipe(
       tap(schema => {
-        this.cache.lemmasSchema;
+        this.cache.lemmasSchema = schema;
         this.cache.lemmasArray = Object.values(schema);
       }),
       map(_ => this.cache.lemmasArray)

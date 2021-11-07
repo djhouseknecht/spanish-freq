@@ -19,6 +19,9 @@ import { WordFreqComponent } from './word-list/word-list.component';
 import { ListPipe } from './pipes/list.pipe';
 import { MainComponent } from './main/main.component';
 import { LemmaComponent } from './lemma/lemma.component';
+import { WordLinksComponent } from './shared/word-links/word-links.component';
+import { WordsLemmaFormsTableComponent } from './shared/words-lemma-forms-table/words-lemma-forms-table.component';
+import { AnchorListComponent } from './shared/anchor-list/anchor-list.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,10 @@ import { LemmaComponent } from './lemma/lemma.component';
     WordFreqComponent,
     ListPipe,
     MainComponent,
-    LemmaComponent
+    LemmaComponent,
+    WordLinksComponent,
+    WordsLemmaFormsTableComponent,
+    AnchorListComponent
   ],
   imports: [
     BrowserModule,

@@ -40,8 +40,12 @@ According to Wikitionary,
 - [ x ] Deploy app to Github pages
     * May need scully
 - [ x ] Add routes for lemma/word list tabs
-- [ ] Write Lemma Page
+- [ x ] Write Lemma Page
+  - [ x ] link to it from lemma list
 - [ ] Write Word page
+  - [ ] link to lemma from word page
+  - [ ] link to word page from lemma page
 - [ ] Write about page
 - [ ] Write modal for multiple words on a lemma
 - [ ] Add better character search
+- [ ] Add a back/home button to lemmas (or header)

@@ -1,1 +1,28 @@
-<p>lemma works!</p>
+<div class="padded">
+
+  <h3>Lemma Form</h3>
+
+  <h1>{{lemma ? lemma.word : 'Cannot Find: "' + param + '"'}}</h1>
+
+  <ng-container *ngIf="lemma">
+    <div class="lemma-content">
+      <div class="definition">
+        <!-- <h4>Definitions</h4> -->
+        <sf-word-links [word]="lemma"></sf-word-links>
+      </div>
+      <div class="rank">
+        <h3>Rank</h3>
+        {{lemma.rank}}
+      </div>
+      <div class="conjugation-count">
+        <h3>Conj. #</h3>
+        {{lemma.conjugations.length}}
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<ng-container *ngIf="lemma">
+  <h2 class="padded">Conjugations</h2>
+  <sf-words-lemma-forms-table [words]="lemma.conjugations"></sf-words-lemma-forms-table>
+</ng-container>

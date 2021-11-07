@@ -1,11 +1,6 @@
 @import '../../mixins.scss';
 
 :host {
-  div.options {
-    width: 100%;
-    padding: 12px;
-  }
-
   div.buttons {
     display: flex;
 

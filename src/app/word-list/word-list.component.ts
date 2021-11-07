@@ -43,7 +43,7 @@ export class WordFreqComponent implements OnInit {
           const search = params.get('search');
           this.currentSearch = search;
           console.log('fetching words for component', { search, activeTab });
-          return this.data.getSpanishWords$(params.get('search'));
+          return this.data.getWords$(params.get('search'));
         }),
         takeUntil(this.endSubs$)
       )

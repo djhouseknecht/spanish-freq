@@ -66,8 +66,8 @@ export class MainComponent implements OnInit, OnDestroy {
       });
 
     combineLatest([
-      this.data.getSpanishWords$(),
-      this.data.getSpanishLemmas$()
+      this.data.getWords$(),
+      this.data.getLemmas$()
     ])
       .pipe(take(1))
       .subscribe(([_words, _lemmas]) => {

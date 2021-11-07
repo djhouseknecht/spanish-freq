@@ -1,0 +1,3 @@
+<ng-container *ngFor="let word of words; let i = index">
+  <a [routerLink]="['/' + type, word.word]"  routerLinkActive="active">{{word.word}}</a>{{i === words.length -1 ? '' : ', '}}
+</ng-container>

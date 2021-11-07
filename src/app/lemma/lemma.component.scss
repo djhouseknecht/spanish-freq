@@ -1,0 +1,21 @@
+:host {
+  div.lemma-content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex-grow: 1;
+    & > * {
+      flex-grow: 1;
+    }
+  }
+
+  .conjugation-count,
+  .rank {
+    text-align: center;
+  }
+
+  div.definitions {
+    display: flex;
+    flex-direction: row;
+  }
+}
