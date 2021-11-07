@@ -42,10 +42,11 @@ According to Wikitionary,
 - [ x ] Add routes for lemma/word list tabs
 - [ x ] Write Lemma Page
   - [ x ] link to it from lemma list
-- [ ] Write Word page
-  - [ ] link to lemma from word page
-  - [ ] link to word page from lemma page
+- [ x ] Write Word page
+  - [ x ] link to lemma from word page
+  - [ x ] link to it from word page
 - [ ] Write about page
 - [ ] Write modal for multiple words on a lemma
 - [ ] Add better character search
 - [ ] Add a back/home button to lemmas (or header)
+- [ ] Combine Word and Lemma page...

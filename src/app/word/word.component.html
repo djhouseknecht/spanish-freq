@@ -1,0 +1,26 @@
+<div class="padded">
+  <h3>Spanish Word</h3>
+
+  <h1>{{word ? word.word : 'Cannot Find: "' + param + '"'}}</h1>
+
+  <ng-container *ngIf="word">
+    <div class="flex-row-content">
+
+      <div>
+        <sf-word-links [word]="word"></sf-word-links>
+      </div>
+      <div class="center-text">
+        <h3>Rank</h3>
+        {{word.rank}}
+      </div>
+      <div class="center-text">
+        <h3>Occ.</h3>
+        {{word.occurrences}}
+      </div>
+      <div class="center-text">
+        <h3>Lemmas</h3>
+        <sf-anchor-list [type]="'lemma'" [words]="word.lemma_forms"></sf-anchor-list>
+      </div>
+    </div>
+  </ng-container>
+</div>

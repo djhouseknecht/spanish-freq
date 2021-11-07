@@ -15,6 +15,20 @@ h1 {
   padding: 12px;
 }
 
+.flex-row-content {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-grow: 1;
+  & > * {
+    flex-grow: 1;
+  }
+}
+
+.center-text {
+  text-align: center;
+}
+
 .word-table {
   width: 100%;
 }

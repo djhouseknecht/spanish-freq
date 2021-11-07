@@ -1,18 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subject, takeUntil, switchMap } from 'rxjs';
-import { ILemmaFormAgg } from '../shared/interfaces';
+import { Subject, switchMap, takeUntil } from 'rxjs';
 import { DataService } from '../core/data.service';
+import { IWordSchema } from '../shared/interfaces';
 
 @Component({
-  selector: 'sf-lemma',
-  templateUrl: './lemma.component.html',
-  styleUrls: ['./lemma.component.scss']
+  selector: 'sf-word',
+  templateUrl: './word.component.html',
+  styleUrls: ['./word.component.scss']
 })
-export class LemmaComponent implements OnInit, OnDestroy {
+export class WordComponent implements OnInit {
+
   private endSubs$ = new Subject<void>();
 
-  lemma?: ILemmaFormAgg | null;
+  word?: IWordSchema | null;
   param!: string | null;
 
   constructor (private data: DataService,
@@ -25,12 +26,12 @@ export class LemmaComponent implements OnInit, OnDestroy {
         switchMap(params => {
           const word = params.get('word');
           this.param = word;
-          return this.data.getLemma$(word as string)
+          return this.data.getWord$(word as string)
         }),
         takeUntil(this.endSubs$)
       )
-      .subscribe(lemma => {
-        this.lemma = lemma;
+      .subscribe(word => {
+        this.word = word;
       });
   }
 

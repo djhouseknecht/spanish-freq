@@ -8,7 +8,7 @@
   <!-- Word Column -->
   <ng-container matColumnDef="word">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Word</th>
-    <td mat-cell *matCellDef="let word">{{word.word}}</td>
+    <td mat-cell *matCellDef="let word"><a [routerLink]="['/word', word.word]">{{word.word}}</a></td>
   </ng-container>
 
   <!-- Word Column -->

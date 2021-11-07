@@ -5,16 +5,19 @@
   <h1>{{lemma ? lemma.word : 'Cannot Find: "' + param + '"'}}</h1>
 
   <ng-container *ngIf="lemma">
-    <div class="lemma-content">
-      <div class="definition">
-        <!-- <h4>Definitions</h4> -->
+    <div class="flex-row-content">
+      <div>
         <sf-word-links [word]="lemma"></sf-word-links>
       </div>
-      <div class="rank">
+      <div class="center-text">
         <h3>Rank</h3>
         {{lemma.rank}}
       </div>
-      <div class="conjugation-count">
+      <div class="center-text">
+        <h3>Total Occ.</h3>
+        {{lemma.total_conjugated_occurrences}}
+      </div>
+      <div class="center-text">
         <h3>Conj. #</h3>
         {{lemma.conjugations.length}}
       </div>

@@ -22,6 +22,8 @@ import { LemmaComponent } from './lemma/lemma.component';
 import { WordLinksComponent } from './shared/word-links/word-links.component';
 import { WordsLemmaFormsTableComponent } from './shared/words-lemma-forms-table/words-lemma-forms-table.component';
 import { AnchorListComponent } from './shared/anchor-list/anchor-list.component';
+import { WordComponent } from './word/word.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { AnchorListComponent } from './shared/anchor-list/anchor-list.component'
     LemmaComponent,
     WordLinksComponent,
     WordsLemmaFormsTableComponent,
-    AnchorListComponent
+    AnchorListComponent,
+    WordComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
