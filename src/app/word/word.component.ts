@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { Subject, switchMap, takeUntil } from 'rxjs';
+import { Subject, switchMap, takeUntil, combineLatest } from 'rxjs';
+
 import { DataService } from '../core/data.service';
-import { IWordSchema } from '../shared/interfaces';
+import { IWordSchema, ILemmaFormAgg } from '../shared/interfaces';
 
 @Component({
   selector: 'sf-word',
@@ -15,9 +17,12 @@ export class WordComponent implements OnInit {
 
   word?: IWordSchema | null;
   param!: string | null;
+  lemmas?: ILemmaFormAgg[];
 
-  constructor (private data: DataService,
-    private activatedRoute: ActivatedRoute
+  constructor (
+    private data: DataService,
+    private activatedRoute: ActivatedRoute,
+    private titleService: Title
   ) { }
 
   ngOnInit (): void {
@@ -26,12 +31,19 @@ export class WordComponent implements OnInit {
         switchMap(params => {
           const word = params.get('word');
           this.param = word;
+          this.titleService.setTitle(`Spanish Freq: "${word}"`);
           return this.data.getWord$(word as string)
+        }),
+        switchMap(word => {
+          this.word = word;
+          return combineLatest(
+            word.lemma_forms.map(l => this.data.getLemma$(l.word))
+          );
         }),
         takeUntil(this.endSubs$)
       )
-      .subscribe(word => {
-        this.word = word;
+      .subscribe(lemmas => {
+        this.lemmas = lemmas;
       });
   }
 

@@ -24,3 +24,21 @@
     </div>
   </ng-container>
 </div>
+
+<!-- lemmas -->
+<ng-container *ngIf="lemmas?.length === 1">
+  <h2 class="padded">Conjugations for lemma "{{lemmas![0].word}}"</h2>
+  <sf-words-lemma-forms-table *ngFor="let lemma of lemmas" [words]="lemma.conjugations">
+  </sf-words-lemma-forms-table>
+</ng-container>
+
+<ng-container *ngIf="lemmas && lemmas.length > 1">
+  <h2 class="padded">Available Lemmas {{lemmas | list:'all'}}</h2>
+
+  <mat-tab-group mat-align-tabs="center">
+    <mat-tab *ngFor="let lemma of lemmas" [label]="lemma.word">
+      <sf-words-lemma-forms-table [words]="lemma.conjugations">
+      </sf-words-lemma-forms-table>
+    </mat-tab>
+  </mat-tab-group>
+</ng-container>

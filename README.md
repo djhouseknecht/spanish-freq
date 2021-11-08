@@ -50,6 +50,6 @@ According to Wikitionary,
   * Going to use a whole page now
 - [ x ] fix routing
 - [ x ] new favico
-- [ ] Add a back/home button to lemmas (or header)
+- [ X ] Combine Word and Lemma page...
+- [ ] Add a back/home button to lemmas and/or header
 - [ ] Add better character search
-- [ ] Combine Word and Lemma page...
