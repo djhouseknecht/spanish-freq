@@ -3,6 +3,7 @@ import rp from 'request-promise';
 import $ from 'cheerio';
 import fs from 'fs';
 import { IWordSchema, IFreqSchema, IWord } from '../src/app/shared/interfaces';
+import { aggDir, rawDir } from './config';
 
 const wiktionaryOrigin = 'https://en.wiktionary.org';
 const spanishDictOrigin = 'https://www.spanishdict.com';
@@ -105,7 +106,7 @@ async function run () {
 
     /* save the data to file */
     const name = url.split('/').slice(-1)[0];
-    saveOutput(`src/assets/raw_data/${name}.json`, output);
+    saveOutput(`${rawDir}/${name}.json`, output);
 
     /* add to our running list */
     Object.assign(runningOutput, output);
@@ -113,7 +114,7 @@ async function run () {
   }
 
   /* save the final list */
-  saveOutput('src/assets/agg_data/Spanish1-10000.json', runningOutput);
+  saveOutput(`${aggDir}/Spanish1-10000.json`, runningOutput);
 }
 
 run();

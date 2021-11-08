@@ -45,8 +45,11 @@ According to Wikitionary,
 - [ x ] Write Word page
   - [ x ] link to lemma from word page
   - [ x ] link to it from word page
-- [ ] Write about page
-- [ ] Write modal for multiple words on a lemma
-- [ ] Add better character search
+- [ x ] Write about page
+- [ x ] ~~Write modal for multiple words on a lemma~~
+  * Going to use a whole page now
+- [ x ] fix routing
+- [ x ] new favico
 - [ ] Add a back/home button to lemmas (or header)
+- [ ] Add better character search
 - [ ] Combine Word and Lemma page...
