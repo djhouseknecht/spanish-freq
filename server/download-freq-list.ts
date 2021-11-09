@@ -3,7 +3,7 @@ import rp from 'request-promise';
 import $ from 'cheerio';
 import fs from 'fs';
 import { IWordSchema, IFreqSchema, IWord } from '../src/app/shared/interfaces';
-import { aggDir, rawDir } from './utils';
+import { aggDir, rawDir, santize } from './utils';
 
 const wiktionaryOrigin = 'https://en.wiktionary.org';
 const spanishDictOrigin = 'https://www.spanishdict.com';
@@ -40,7 +40,8 @@ function parseAnchor (el: cheerio.Element): IWord {
   const word: IWord = {
     wiktionary_href: `${wiktionaryOrigin}${anchor.attr('href')}`,
     spanish_dict_href: `${spanishDictOrigin}/translate/${text}`,
-    word: text
+    word: text,
+    searchableWord: santize(text)
   };
   return word;
 }

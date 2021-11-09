@@ -10,6 +10,7 @@ export interface IWordSchema extends IWord {
 
 export interface IWord {
   word: string;
+  searchableWord: string;
   wiktionary_href?: string;
   spanish_dict_href?: string;
 }

@@ -55,4 +55,4 @@ According to Wikitionary,
 - [ x ] remove need for second API request for total 10,000 words. Just process the Lemma Aggs
 - [ x ] Scroll to top of page after routing
 - [ x ] Add a back/home button to lemmas and/or header
-- [ ] Add better character search
+- [ x ] Add better character search

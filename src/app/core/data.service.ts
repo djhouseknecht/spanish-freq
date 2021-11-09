@@ -9,6 +9,7 @@ import {
   ILemmaFormAgg,
   IWord
 } from '../shared/interfaces';
+import { santize } from '../shared/utils';
 
 interface ICache {
   wordsSchema: IFreqSchema | null;
@@ -108,34 +109,46 @@ export class DataService {
   private _convertLemmaAggToIWord (lemma: ILemmaFormAgg): IWord {
     return {
       word: lemma.word,
+      searchableWord: lemma.searchableWord,
       spanish_dict_href: lemma.spanish_dict_href,
       wiktionary_href: lemma.wiktionary_href
     }
   }
 
-  private _filter<T extends IWord> (d: T[], search?: string | null): T[] {
-    if (!search) return d;
+  private _filter<T extends IWord> (words: T[], search?: string | null): T[] {
+    if (!search) return words;
 
-    // TODO: add character replacement
     const filterValue = search.toLowerCase();
-    return d
-      .filter(word => word.word.includes(filterValue))
+    const searchableValue = santize(filterValue);
+    return words
+      .filter(word => word.searchableWord.includes(searchableValue))
       .sort((aWord, bWord) => {
-        const a = aWord.word;
-        const b = bWord.word;
-        if (a === filterValue) {
+        const a = aWord.searchableWord;
+        const b = bWord.searchableWord;
+
+        /* exact match */
+        if (aWord.word === filterValue) {
           return -1;
         }
 
-        if (b === filterValue) {
+        if (bWord.word === filterValue) {
           return 1;
         }
 
-        if (a.startsWith(filterValue)) {
+        /* fuzzy match */
+        if (a === searchableValue) {
           return -1;
         }
 
-        if (b.startsWith(filterValue)) {
+        if (b === searchableValue) {
+          return 1;
+        }
+
+        if (a.startsWith(searchableValue)) {
+          return -1;
+        }
+
+        if (b.startsWith(searchableValue)) {
           return 1;
         }
 

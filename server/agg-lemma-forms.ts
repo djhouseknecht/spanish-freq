@@ -24,6 +24,7 @@ function generateLemmaSchema (freqSchema: IFreqSchema): ILemmaSchema {
           total_conjugated_occurrences: 0,
           conjugations: [],
           word: lemma.word,
+          searchableWord: lemma.searchableWord,
           wiktionary_href: lemma.wiktionary_href,
           spanish_dict_href: lemma.spanish_dict_href
         };

@@ -14,10 +14,10 @@
 </div>
 
 <mat-tab-group mat-align-tabs="center" [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="tabChanged($event)">
-  <mat-tab label="Lemma Forms">
+  <mat-tab label="Lemmas">
     <sf-word-listing [listState$]="listState$" listType="lemmas"></sf-word-listing>
   </mat-tab>
-  <mat-tab label="Individual Words">
+  <mat-tab label="Words">
     <sf-word-listing [listState$]="listState$" listType="words"></sf-word-listing>
   </mat-tab>
 </mat-tab-group>
