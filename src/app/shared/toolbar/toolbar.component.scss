@@ -1,0 +1,27 @@
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+a {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+  &:followed {
+    color: #fff;
+  }
+}
+
+button {
+  width: 24px;
+  padding-left: 3px;
+}
+
+div.special {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  z-index: -1;
+}

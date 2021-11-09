@@ -12,9 +12,9 @@ export class ListPipe implements PipeTransform {
     } else if (amount === 'all') {
       return `${words.map(w => `"${w.word}"`).join(', ')}`
     } else if (count < 3) {
-      return `[ ${words.map(w => w.word).join(', ')} ]`;
+      return `${words.map(w => w.word).join(', ')}`;
     } else {
-      return `[ ${count} ... ]`;
+      return `[${count}]`;
     }
   }
 

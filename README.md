@@ -53,5 +53,6 @@ According to Wikitionary,
 - [ X ] Combine Word and Lemma page...
 - [ x ] Add titles
 - [ x ] remove need for second API request for total 10,000 words. Just process the Lemma Aggs
-- [ ] Add a back/home button to lemmas and/or header
+- [ x ] Scroll to top of page after routing
+- [ x ] Add a back/home button to lemmas and/or header
 - [ ] Add better character search

@@ -12,10 +12,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AppComponent } from './app.component';
-import { LemmaFreqComponent } from './lemma-list/lemma-list.component';
-import { WordFreqComponent } from './word-list/word-list.component';
 import { ListPipe } from './pipes/list.pipe';
 import { MainComponent } from './main/main.component';
 import { LemmaComponent } from './lemma/lemma.component';
@@ -24,12 +24,12 @@ import { WordsLemmaFormsTableComponent } from './shared/words-lemma-forms-table/
 import { AnchorListComponent } from './shared/anchor-list/anchor-list.component';
 import { WordComponent } from './word/word.component';
 import { AboutComponent } from './about/about.component';
+import { ToolbarComponent } from './shared/toolbar/toolbar.component';
+import { WordListingComponent } from './word-listing/word-listing.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LemmaFreqComponent,
-    WordFreqComponent,
     ListPipe,
     MainComponent,
     LemmaComponent,
@@ -37,7 +37,9 @@ import { AboutComponent } from './about/about.component';
     WordsLemmaFormsTableComponent,
     AnchorListComponent,
     WordComponent,
-    AboutComponent
+    AboutComponent,
+    ToolbarComponent,
+    WordListingComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,9 @@ import { AboutComponent } from './about/about.component';
     MatFormFieldModule,
     MatInputModule,
     MatSortModule,
-    MatButtonModule
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

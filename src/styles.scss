@@ -1,4 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+@import './mixins.scss';
+@import "~@angular/material/theming";
+
+$primaryPalette: mat-palette($mat-deep-purple);
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -8,6 +11,25 @@ table {
 
 h1 {
   font-weight: 900;
+}
+
+sf-root {
+  display: flex;
+  flex-direction: column;
+
+  margin: auto;
+  width: 100%;
+
+  @include for-tablet-portrait-up {
+    width: 600px;
+  }
+  @include for-tablet-landscape-up {
+    width: 700px;
+  }
+}
+
+.primary-background {
+  background-color: mat-color($primaryPalette);
 }
 
 .padded {
@@ -31,6 +53,10 @@ h1 {
 
 .word-table {
   width: 100%;
+  @include for-tablet-portrait-up {
+    width: 96%;
+    margin: 14px auto;
+  }
 }
 
 .mat-header-row {
@@ -52,9 +78,7 @@ h1 {
   min-width: 46px;
 }
 
-.mat-column-total_conjugated_occurrences,
 .mat-column-occurrences,
-.mat-column-lemma_forms,
-.mat-column-conjugations {
+.mat-column-lists {
   text-align: right !important;
 }

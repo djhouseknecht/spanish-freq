@@ -5,7 +5,6 @@ import { Subject, switchMap, takeUntil, combineLatest } from 'rxjs';
 
 import { DataService } from '../core/data.service';
 import { IWordSchema, ILemmaFormAgg } from '../shared/interfaces';
-import { LocationHistoryService } from '../core/location-history.service';
 
 @Component({
   selector: 'sf-word',
@@ -23,8 +22,7 @@ export class WordComponent implements OnInit {
   constructor (
     private data: DataService,
     private activatedRoute: ActivatedRoute,
-    private titleService: Title,
-    private locationHistoryService: LocationHistoryService
+    private titleService: Title
   ) { }
 
   ngOnInit (): void {
@@ -47,10 +45,6 @@ export class WordComponent implements OnInit {
       .subscribe(lemmas => {
         this.lemmas = lemmas;
       });
-  }
-  back() {
-    console.log('back clicked')
-    this.locationHistoryService.back();
   }
 
   ngOnDestroy () {

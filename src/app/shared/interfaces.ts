@@ -25,3 +25,10 @@ export interface ILemmaFormAgg extends IWord {
 }
 
 export type HrefToUse = 'spanish_dict_href' | 'wiktionary_href';
+
+export type Tabs = 'lemmas' | 'words';
+
+export interface IListState {
+  tab: Tabs | null;
+  search: string | null;
+}

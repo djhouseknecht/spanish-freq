@@ -4,8 +4,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable, combineLatest, take, takeUntil, Subject, distinctUntilChanged } from 'rxjs';
 import { DataService } from '../core/data.service';
-
-type Tabs = 'lemmas' | 'words';
+import { IListState, Tabs } from '../shared/interfaces';
 
 @Component({
   selector: 'sf-main',
@@ -13,55 +12,59 @@ type Tabs = 'lemmas' | 'words';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit, OnDestroy {
-  tabs = ['lemmas', 'words'] as const;
-  activeTab$!: Observable<Tabs>;
+  private endSubs$ = new Subject<void>();
+  private _listState$ = new BehaviorSubject<IListState>({
+    search: '',
+    tab: 'lemmas'
+  });
+
   isLoading = true;
+  tabs = ['lemmas', 'words'] as const;
   searchControl = new FormControl();
   filteredOptions!: Observable<string[]>;
   selectedTabIndex: number = 0;
+  listState$!: Observable<IListState>;
 
-  private endSubs$ = new Subject<void>();
-  private _activeTab$ = new BehaviorSubject<Tabs>('lemmas');
-
-
-  constructor (private data: DataService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor (
+    private data: DataService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   tabChanged (event: MatTabChangeEvent) {
     const tab = this.tabs[event.index];
-    this._activeTab$.next(tab);
-    this.router.navigate([tab], {
-      queryParamsHandling: 'preserve'
-    });
+    this.emitState({ tab });
+    this.routeWithQueryParams();
   }
 
   ngOnInit () {
-    this.activeTab$ = this._activeTab$.asObservable()
-      .pipe(distinctUntilChanged());
-    combineLatest([
-      this.activatedRoute.url,
-      this.activatedRoute.queryParamMap
-    ])
-      .pipe(takeUntil(this.endSubs$))
-      .subscribe(([url, queryParams]) => {
-        const search = queryParams.get('search');
-        let tab = url[0]?.path as Tabs | null;
+    this.listState$ = this._listState$.asObservable().pipe(
+      distinctUntilChanged((prev, curr) => {
+        return prev.search === curr.search &&
+          prev.tab === curr.search;
+      })
+    );
 
-        if (tab && !this.tabs.includes(tab)) {
-           this.router.navigate([''], {
-            queryParamsHandling: 'preserve'
-           });
-           return;
-        }
+    this.activatedRoute.queryParamMap
+      .pipe(takeUntil(this.endSubs$))
+      .subscribe((queryParams) => {
+        const search = queryParams.get('search');
+        let tab = queryParams.get('tab') as Tabs | null;
 
         if (search && search !== this.searchControl.value) {
           this.searchControl.patchValue(search);
         }
 
-        if (tab && tab !== this._activeTab$.getValue()) {
+        const { tab: currTab, search: currSearch } = this._listState$.getValue();
+        if (!tab) {
+          tab = 'lemmas';
+        }
+
+        if (currSearch !== search || currTab !== tab) {
+          this.emitState({ tab, search });
+
           const index = this.tabs.indexOf(tab);
-          console.log('page load tab does not match, updating', { index, tab, actualTab: this.tabs[index] });
           this.selectedTabIndex = index;
-          this._activeTab$.next(tab);
         }
       });
 
@@ -76,16 +79,13 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   search (clear = false) {
+    const search = clear ? null : this.searchControl.value;
     if (clear) {
-      this.searchControl.patchValue('');
+      this.searchControl.patchValue(null);
     }
 
-    this.router.navigate([this._activeTab$.getValue()], {
-      queryParams: {
-        search: this.searchControl.value || null
-      },
-      queryParamsHandling: 'merge'
-    });
+    this.emitState({ search });
+    this.routeWithQueryParams();
   }
 
   ngOnDestroy () {
@@ -93,4 +93,21 @@ export class MainComponent implements OnInit, OnDestroy {
     this.endSubs$.complete();
   }
 
+  private routeWithQueryParams (): void {
+    this.router.navigate([''], {
+      queryParams: { ...this._listState$.getValue() },
+      queryParamsHandling: 'merge'
+    });
+  }
+
+  private emitState (state: Partial<IListState>): void {
+    if (state.search === '') {
+      state.search === null; // this ensures we don't have an empty query param
+    }
+
+    this._listState$.next({
+      ...this._listState$.getValue(),
+      ...state
+    });
+  }
 }
