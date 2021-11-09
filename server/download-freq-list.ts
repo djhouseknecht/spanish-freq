@@ -3,7 +3,7 @@ import rp from 'request-promise';
 import $ from 'cheerio';
 import fs from 'fs';
 import { IWordSchema, IFreqSchema, IWord } from '../src/app/shared/interfaces';
-import { aggDir, rawDir } from './config';
+import { aggDir, rawDir } from './utils';
 
 const wiktionaryOrigin = 'https://en.wiktionary.org';
 const spanishDictOrigin = 'https://www.spanishdict.com';

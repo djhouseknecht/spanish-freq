@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 import { IFreqSchema, ILemmaSchema, ILemmaFormAgg } from '../src/app/shared/interfaces';
-import { aggDir } from './config';
+import { aggDir } from './utils';
 
 function loadRawData (): IFreqSchema {
   return JSON.parse(fs.readFileSync(`${aggDir}/Spanish1-10000.json`).toString());

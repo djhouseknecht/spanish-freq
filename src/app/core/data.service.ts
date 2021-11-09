@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, of, tap, switchMap } from 'rxjs';
+import { map, Observable, of, tap, switchMap, Subject, ReplaySubject, take } from 'rxjs';
 
 import {
   IFreqSchema,
@@ -12,11 +12,11 @@ import {
 
 interface ICache {
   wordsSchema: IFreqSchema | null;
-  searchableWords: IFreqSchema | null;
   wordsArray: IWordSchema[];
+  wordsObs$: Subject<IWordSchema[]> | null;
   lemmasSchema: ILemmaSchema | null;
-  searchableLemmas: ILemmaSchema | null;
   lemmasArray: ILemmaFormAgg[];
+  lemmasObs$: Subject<ILemmaFormAgg[]> | null;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -25,25 +25,27 @@ export class DataService {
   private wordsUrl = 'assets/agg_data/Spanish1-10000.json';
   private cache: ICache = {
     wordsSchema: null,
-    searchableWords: null,
     wordsArray: [],
+    wordsObs$: null,
     lemmasSchema: null,
-    searchableLemmas: null,
-    lemmasArray: []
+    lemmasArray: [],
+    lemmasObs$: null
   };
 
   constructor (private http: HttpClient) { }
 
   getWords$ (search?: string | null): Observable<IWordSchema[]> {
     return this._getSpanishWords$().pipe(
-      map(words => this._filter(words, search))
+      map(words => this._filter(words, search)),
+      take(1)
     )
   }
 
   getLemmas$ (search?: string | null): Observable<ILemmaFormAgg[]> {
     return this._getSpanishLemmas$().pipe(
-      map(lemmas => this._filter(lemmas, search))
-    )
+      map(lemmas => this._filter(lemmas, search)),
+      take(1)
+    );
   }
 
   getWord$ (word: string): Observable<IWordSchema> {
@@ -59,29 +61,56 @@ export class DataService {
   }
 
   private _getSpanishWords$ (): Observable<IWordSchema[]> {
-    if (this.cache.wordsSchema) {
-      return of(this.cache.wordsArray);
+    if (this.cache.wordsObs$) {
+      return this.cache.wordsObs$.asObservable();
     }
+
+    this.cache.wordsObs$ = new ReplaySubject(1);
+
+    // return this._getSpanishLemmas$().pipe(
+    //   tap(lemma => {
+    //     const schema = this._mapLemmasBackToIndividualWords(lemma);
+    //     this.cache.wordsSchema = schema;
+    //     this.cache.wordsArray = Object.values(schema);
+    //     this.cache.wordsObs$?.next(this.cache.wordsArray);
+    //   }),
+    //   switchMap(_ => this.cache.wordsObs$!.asObservable())
+    // );
+
+    /* make the actual request */
     return this.http.get<IFreqSchema>(this.wordsUrl).pipe(
       tap(schema => {
         this.cache.wordsSchema = schema;
         this.cache.wordsArray = Object.values(schema);
+        this.cache.wordsObs$?.next(this.cache.wordsArray);
       }),
-      map(_ => this.cache.wordsArray)
+      switchMap(_ => this.cache.wordsObs$!.asObservable())
     );
   }
 
   private _getSpanishLemmas$ (): Observable<ILemmaFormAgg[]> {
-    if (this.cache.lemmasSchema) {
-      return of(this.cache.lemmasArray);
+    if (this.cache.lemmasObs$) {
+      return this.cache.lemmasObs$.asObservable();
     }
+
+    this.cache.lemmasObs$ = new ReplaySubject(1);
+
     return this.http.get<ILemmaSchema>(this.lemmaUrl).pipe(
       tap(schema => {
         this.cache.lemmasSchema = schema;
         this.cache.lemmasArray = Object.values(schema);
+        this.cache.lemmasObs$?.next(this.cache.lemmasArray)
       }),
-      map(_ => this.cache.lemmasArray)
+      switchMap(_ => this.cache.lemmasObs$!.asObservable())
     );
+  }
+
+  private _convertLemmaAggToIWord (lemma: ILemmaFormAgg): IWord {
+    return {
+      word: lemma.word,
+      spanish_dict_href: lemma.spanish_dict_href,
+      wiktionary_href: lemma.wiktionary_href
+    }
   }
 
   private _filter<T extends IWord> (d: T[], search?: string | null): T[] {
@@ -121,32 +150,31 @@ export class DataService {
       });
   }
 
-  sanitizeSpanishChars () {
-    function replacer (match: string,
-      p1: string,
-      p2: string,
-      p3: string,
-      p4: string,
-      p5: string,
-      p6: string,
-      p7: string,
-      offset: string,
-      string: string
-    ) {
-      // p1 is nondigits, p2 digits, and p3 non-alphanumerics
-      return [p1, p2, p3].join(' - ');
-    }
-    let newString = 'abc12345#$*%'.replace(/([^\d]*)(\d*)([^\w]*)/, replacer);
-    console.log(newString);  // abc - 12345 - #$*%
-  }
+  private _mapLemmasBackToIndividualWords (lemmas: ILemmaFormAgg[]): IFreqSchema {
+    const schema: IFreqSchema = {};
+    const map = new Map<string, IWordSchema>();
 
-  private map = new Map<string, string>([
-    ['ñ', 'n'],
-    ['á', 'a'],
-    ['é', 'e'],
-    ['í', 'i'],
-    ['ó', 'o'],
-    ['ú', 'u'],
-    ['ü', 'u']
-  ]);
+    lemmas.forEach(lemma => {
+      lemma.conjugations.forEach(conj => {
+        const existingValue = map.get(conj.word);
+        if (existingValue) {
+          existingValue.lemma_forms.push(this._convertLemmaAggToIWord(lemma));
+        } else {
+          map.set(conj.word, {
+            ...conj,
+            lemma_forms: [this._convertLemmaAggToIWord(lemma)]
+          });
+        }
+      });
+    });
+
+    const wordsArray: IWordSchema[] = [...map.values()]
+      .sort((a, b) => a.rank - b.rank)
+
+    wordsArray.forEach(word => {
+      schema[word.word] = word;
+    });
+
+    return schema;
+  }
 }

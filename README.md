@@ -51,5 +51,7 @@ According to Wikitionary,
 - [ x ] fix routing
 - [ x ] new favico
 - [ X ] Combine Word and Lemma page...
+- [ x ] Add titles
+- [ x ] remove need for second API request for total 10,000 words. Just process the Lemma Aggs
 - [ ] Add a back/home button to lemmas and/or header
 - [ ] Add better character search
