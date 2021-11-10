@@ -4,13 +4,22 @@
 $primaryPalette: mat-palette($mat-deep-purple);
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 18px !important;
+}
 table {
   width: 100%;
 }
 
 h1 {
   font-weight: 900;
+  font-size: 28px !important;
+}
+
+mat-form-field {
+  font-size: 14px !important;
 }
 
 sf-root {
