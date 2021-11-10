@@ -1,1 +1,1 @@
-<mat-spinner [class.hidden]="!isLoading"></mat-spinner>
+<mat-spinner [@loadingNotLoading]="isLoading ? 'loading' : 'no-loading'"></mat-spinner>
