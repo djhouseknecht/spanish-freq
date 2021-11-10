@@ -56,3 +56,5 @@ According to Wikitionary,
 - [ x ] Scroll to top of page after routing
 - [ x ] Add a back/home button to lemmas and/or header
 - [ x ] Add better character search
+- [ x ] Message when no search results
+- [ ] Add loading spinner

@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
-import { Observable, Subject, takeUntil, filter, tap, switchMap } from 'rxjs';
+import { Component, Input, OnInit, OnDestroy, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Observable, Subject, takeUntil, filter, tap, switchMap, ReplaySubject, skipUntil, shareReplay } from 'rxjs';
 import { IListState, Tabs, IWordSchema, ILemmaFormAgg } from '../shared/interfaces';
 import { DataService } from '../core/data.service';
 import { MatPaginator } from '@angular/material/paginator';
@@ -23,21 +23,26 @@ export class WordListingComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  dataSource = new MatTableDataSource<IWordSchema | ILemmaFormAgg>();
+  dataSource = new MatTableDataSource<IWordSchema | ILemmaFormAgg>([]);
   displayedColumns = ['rank', 'word', 'occurrences', 'lists'];
 
-  words: IWordSchema[] | ILemmaFormAgg[] = [];
+  words!: IWordSchema[] | ILemmaFormAgg[];
   currentSearch?: string | null;
   linkTo!: '/word' | '/lemma';
 
-  constructor (private data: DataService) { }
+  shouldHideTable = true;
+  shouldHideSearch = true;
+  hasLoaded = false;
+
+  private viewLoaded$ = new Subject<void>();
+
+  constructor (private data: DataService, private cdRef: ChangeDetectorRef) { }
 
   ngOnInit (): void {
     this.linkTo = this.isLemma() ? '/lemma' : '/word';
-  }
 
-  ngAfterViewInit () {
-    this.listState$.pipe(
+    this.viewLoaded$.pipe(
+      switchMap(() => this.listState$),
       filter(state => state.tab === this.listType && this.currentSearch !== state.search),
       tap(state => this.currentSearch = state.search),
       switchMap(state => {
@@ -55,9 +60,26 @@ export class WordListingComponent implements OnInit, AfterViewInit, OnDestroy {
         this.dataSource.paginator = this.paginator;
       }
 
+      this.hasLoaded = true;
       this.words = words;
-      this.dataSource.data = words;
+      this.dataSource.data = this.words;
     });
+  }
+
+  ngAfterViewInit () {
+    if (!this.dataSource.sort) {
+      this.dataSource.sort = this.sort;
+    }
+
+    if (!this.dataSource.paginator) {
+      this.dataSource.paginator = this.paginator;
+    }
+
+    // hack to avoid ExpressionChangedAfterItHasBeenCheckedError
+    setTimeout(() => {
+      this.viewLoaded$.next();
+      this.viewLoaded$.complete();
+    }, 10)
   }
 
   isLemma (word?: any): word is ILemmaFormAgg {

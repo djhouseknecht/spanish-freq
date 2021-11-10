@@ -1,34 +1,40 @@
-<table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8 word-table">
-  <!-- Rank Column -->
-  <ng-container matColumnDef="rank">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Rank</th>
-    <td mat-cell *matCellDef="let word">{{word.rank}}</td>
-  </ng-container>
+<div [class.hidden]="!hasLoaded || !dataSource.data.length">
+  <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8 word-table">
+    <!-- Rank Column -->
+    <ng-container matColumnDef="rank">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Rank</th>
+      <td mat-cell *matCellDef="let word">{{word.rank}}</td>
+    </ng-container>
 
-  <!-- Word Column -->
-  <ng-container matColumnDef="word">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Word</th>
-    <td mat-cell *matCellDef="let word"><a [routerLink]="[linkTo, word.word]">{{word.word}}</a></td>
-  </ng-container>
+    <!-- Word Column -->
+    <ng-container matColumnDef="word">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Word</th>
+      <td mat-cell *matCellDef="let word"><a [routerLink]="[linkTo, word.word]">{{word.word}}</a></td>
+    </ng-container>
 
-  <!-- Word Column -->
-  <ng-container matColumnDef="occurrences">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Occ.</th>
-    <td mat-cell *matCellDef="let word">{{isLemma() ? word.total_conjugated_occurrences : word.occurrences}}</td>
-  </ng-container>
+    <!-- Word Column -->
+    <ng-container matColumnDef="occurrences">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Occ.</th>
+      <td mat-cell *matCellDef="let word">{{isLemma() ? word.total_conjugated_occurrences : word.occurrences}}</td>
+    </ng-container>
 
-  <!-- Conjugations Column -->
-  <ng-container matColumnDef="lists">
-    <th mat-header-cell *matHeaderCellDef>{{isLemma() ? 'Conjugations' : 'Lemma Forms'}}</th>
-    <td mat-cell *matCellDef="let word">
-      <a *ngIf="isLemma()" [routerLink]="['/lemma', word.word]" >{{word.conjugations | list }}</a>
-      <sf-anchor-list *ngIf="!isLemma()" [words]="word.lemma_forms" [type]="'lemma'"></sf-anchor-list>
-    </td>
-  </ng-container>
+    <!-- Conjugations Column -->
+    <ng-container matColumnDef="lists">
+      <th mat-header-cell *matHeaderCellDef>{{isLemma() ? 'Conjugations' : 'Lemma Forms'}}</th>
+      <td mat-cell *matCellDef="let word">
+        <a *ngIf="isLemma()" [routerLink]="['/lemma', word.word]">{{word.conjugations | list }}</a>
+        <sf-anchor-list *ngIf="!isLemma()" [words]="word.lemma_forms" [type]="'lemma'"></sf-anchor-list>
+      </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 
-<mat-paginator [pageSizeOptions]="[50, 100, 250, 500]" showFirstLastButtons aria-label="Select page of Words">
-</mat-paginator>
+  <mat-paginator [pageSizeOptions]="[50, 100, 250, 500]" showFirstLastButtons aria-label="Select page of Words">
+  </mat-paginator>
+</div>
+
+<div class="no-results" [class.hidden]="!hasLoaded || dataSource.data.length">
+  No search results <span *ngIf="currentSearch" >for "{{ currentSearch }}"</span>
+</div>

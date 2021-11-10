@@ -1,0 +1,12 @@
+$divHeight: 60px;
+
+.hidden {
+  display: none;
+}
+
+div.no-results {
+  height: $divHeight;
+  line-height: $divHeight;
+  text-align: center;
+  font-size: 16px;
+}

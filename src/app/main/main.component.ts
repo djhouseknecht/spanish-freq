@@ -94,17 +94,18 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   private routeWithQueryParams (): void {
+    const state = this._listState$.getValue();
+    if (state.search === '') {
+      state.search === null; // this ensures we don't have an empty query param
+    }
+
     this.router.navigate([''], {
-      queryParams: { ...this._listState$.getValue() },
+      queryParams: { ...state },
       queryParamsHandling: 'merge'
     });
   }
 
   private emitState (state: Partial<IListState>): void {
-    if (state.search === '') {
-      state.search === null; // this ensures we don't have an empty query param
-    }
-
     this._listState$.next({
       ...this._listState$.getValue(),
       ...state
