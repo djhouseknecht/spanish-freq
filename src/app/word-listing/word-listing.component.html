@@ -8,7 +8,7 @@
 
     <!-- Word Column -->
     <ng-container matColumnDef="word">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Word</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{isLemma() ? 'Lemma' : 'Word'}}</th>
       <td mat-cell *matCellDef="let word"><a [routerLink]="[linkTo, word.word]">{{word.word}}</a></td>
     </ng-container>
 
