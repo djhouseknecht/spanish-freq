@@ -57,4 +57,6 @@ According to Wikitionary,
 - [ x ] Add a back/home button to lemmas and/or header
 - [ x ] Add better character search
 - [ x ] Message when no search results
-- [ ] Add loading spinner
+- [ x ] Add loading spinner
+- [ ] Maybe add verb tense charts
+- [ ] Maybe export lemma as csv...

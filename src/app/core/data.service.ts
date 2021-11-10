@@ -10,6 +10,8 @@ import {
   IWord
 } from '../shared/interfaces';
 import { santize } from '../shared/utils';
+import { LoadingService } from './loading.service';
+import { ICanLoad } from '../shared/interfaces';
 
 interface ICache {
   wordsSchema: IFreqSchema | null;
@@ -21,7 +23,7 @@ interface ICache {
 }
 
 @Injectable({ providedIn: 'root' })
-export class DataService {
+export class DataService implements ICanLoad {
   private lemmaUrl = 'assets/agg_data/SpanishLemmasAgg.json';
   private wordsUrl = 'assets/agg_data/Spanish1-10000.json';
   private cache: ICache = {
@@ -33,31 +35,43 @@ export class DataService {
     lemmasObs$: null
   };
 
-  constructor (private http: HttpClient) { }
+  name = 'DataService';
+
+  constructor (
+    private http: HttpClient,
+    private loadingService: LoadingService
+  ) { }
 
   getWords$ (search?: string | null): Observable<IWordSchema[]> {
     return this._getSpanishWords$().pipe(
+      this.loadingService.startLoading(this.name),
       map(words => this._filter(words, search)),
-      take(1)
-    )
+      take(1),
+      this.loadingService.stopLoading(this.name),
+    );
   }
 
   getLemmas$ (search?: string | null): Observable<ILemmaFormAgg[]> {
     return this._getSpanishLemmas$().pipe(
+      this.loadingService.startLoading(this.name),
       map(lemmas => this._filter(lemmas, search)),
-      take(1)
+      take(1),
+      this.loadingService.stopLoading(this.name),
     );
   }
 
   getWord$ (word: string): Observable<IWordSchema> {
     return this.getWords$().pipe(
-      switchMap(_ => of(this.cache.wordsSchema![word]))
+      switchMap(_ => of(this.cache.wordsSchema![word])),
+      this.loadingService.stopLoading(this.name),
     );
   }
 
   getLemma$ (lemma: string): Observable<ILemmaFormAgg> {
     return this.getLemmas$().pipe(
-      switchMap(_ => of(this.cache.lemmasSchema![lemma]))
+      this.loadingService.startLoading(this.name),
+      switchMap(_ => of(this.cache.lemmasSchema![lemma])),
+      this.loadingService.stopLoading(this.name),
     );
   }
 

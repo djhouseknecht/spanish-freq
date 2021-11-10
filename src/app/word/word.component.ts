@@ -12,7 +12,6 @@ import { IWordSchema, ILemmaFormAgg } from '../shared/interfaces';
   styleUrls: ['./word.component.scss']
 })
 export class WordComponent implements OnInit {
-
   private endSubs$ = new Subject<void>();
 
   word?: IWordSchema | null;

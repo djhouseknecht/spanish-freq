@@ -2,8 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Router, ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, combineLatest, take, takeUntil, Subject, distinctUntilChanged } from 'rxjs';
-import { DataService } from '../core/data.service';
+import { BehaviorSubject, Observable, takeUntil, Subject, distinctUntilChanged } from 'rxjs';
 import { IListState, Tabs } from '../shared/interfaces';
 
 @Component({
@@ -18,7 +17,6 @@ export class MainComponent implements OnInit, OnDestroy {
     tab: 'lemmas'
   });
 
-  isLoading = true;
   tabs = ['lemmas', 'words'] as const;
   searchControl = new FormControl();
   filteredOptions!: Observable<string[]>;
@@ -26,7 +24,6 @@ export class MainComponent implements OnInit, OnDestroy {
   listState$!: Observable<IListState>;
 
   constructor (
-    private data: DataService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) { }
@@ -66,15 +63,6 @@ export class MainComponent implements OnInit, OnDestroy {
           const index = this.tabs.indexOf(tab);
           this.selectedTabIndex = index;
         }
-      });
-
-    combineLatest([
-      this.data.getWords$(),
-      this.data.getLemmas$()
-    ])
-      .pipe(take(1))
-      .subscribe(([_words, _lemmas]) => {
-        this.isLoading = false;
       });
   }
 

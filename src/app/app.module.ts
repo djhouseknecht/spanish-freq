@@ -14,6 +14,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppComponent } from './app.component';
 import { ListPipe } from './pipes/list.pipe';
@@ -26,6 +27,7 @@ import { WordComponent } from './word/word.component';
 import { AboutComponent } from './about/about.component';
 import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 import { WordListingComponent } from './word-listing/word-listing.component';
+import { LoadingComponent } from './shared/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import { WordListingComponent } from './word-listing/word-listing.component';
     WordComponent,
     AboutComponent,
     ToolbarComponent,
-    WordListingComponent
+    WordListingComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +59,8 @@ import { WordListingComponent } from './word-listing/word-listing.component';
     MatSortModule,
     MatButtonModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

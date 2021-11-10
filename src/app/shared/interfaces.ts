@@ -33,3 +33,7 @@ export interface IListState {
   tab: Tabs | null;
   search: string | null;
 }
+
+export interface ICanLoad {
+  name: string;
+}
