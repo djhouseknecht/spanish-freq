@@ -1,5 +1,9 @@
-# spanish-freq
+# Spanish-freq
 Just messing around with spanish words
+
+# Try It Out
+The app is hosted here:
+> [https://djhouseknecht.github.io/spanish-freq/](https://djhouseknecht.github.io/spanish-freq/)
 ## Credit
 All the data for this project was attained at [Wiktionary](#wiktionary).
 
@@ -37,26 +41,27 @@ According to Wikitionary,
 * https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Spanish9001-10000
 
 ### Running Feature List
-- [ x ] Deploy app to Github pages
+- [x] Deploy app to Github pages
     * May need scully
-- [ x ] Add routes for lemma/word list tabs
-- [ x ] Write Lemma Page
-  - [ x ] link to it from lemma list
-- [ x ] Write Word page
-  - [ x ] link to lemma from word page
-  - [ x ] link to it from word page
-- [ x ] Write about page
-- [ x ] ~~Write modal for multiple words on a lemma~~
+- [x] Add routes for lemma/word list tabs
+- [x] Write Lemma Page
+  - [x] link to it from lemma list
+- [x] Write Word page
+  - [x] link to lemma from word page
+  - [x] link to it from word page
+- [x] Write about page
+- [x] ~~Write modal for multiple words on a lemma~~
   * Going to use a whole page now
-- [ x ] fix routing
-- [ x ] new favico
-- [ X ] Combine Word and Lemma page...
-- [ x ] Add titles
-- [ x ] remove need for second API request for total 10,000 words. Just process the Lemma Aggs
-- [ x ] Scroll to top of page after routing
-- [ x ] Add a back/home button to lemmas and/or header
-- [ x ] Add better character search
-- [ x ] Message when no search results
-- [ x ] Add loading spinner
+- [x] fix routing
+- [x] new favicon
+- [x] Combine Word and Lemma page...
+- [x] Add titles
+- [x] ~~remove need for second API request for total 10,000 words. Just process the Lemma Aggs~~
+  - Code is written, but not turned on
+- [x] Scroll to top of page after routing
+- [x] Add a back/home button to lemmas and/or header
+- [x] Add better character search
+- [x] Message when no search results
+- [x] Add loading spinner
 - [ ] Maybe add verb tense charts
 - [ ] Maybe export lemma as csv...
