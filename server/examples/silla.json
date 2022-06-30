@@ -1,0 +1,5 @@
+{
+  "url": "\/definitions\/es\/en\/silla",
+  "status": 200,
+  "content": "[{\"root\": \"chair\", \"surfaceform\": \"chair\", \"partofspeech\": {\"partofspeechcategory\": \"noun\", \"number\": \"singular\"}, \"text\": \"chair\"}, {\"root\": \"seat\", \"surfaceform\": \"seat\", \"partofspeech\": {\"partofspeechcategory\": \"noun\", \"number\": \"singular\"}, \"text\": \"seat\"}]"
+}

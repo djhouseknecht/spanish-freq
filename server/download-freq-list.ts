@@ -26,6 +26,19 @@ async function fetchHtmlPage (url: string): Promise<string> {
   return html;
 }
 
+function fHtmlPage (url: string): Promise<any> {
+  return rp(url)
+    .then(html => {
+      console.log(`  successfully fetched url: ${url}`);
+      // return 'hi';
+      // return html;
+    })
+    .then(hi => {
+
+      return hi;
+    });
+}
+
 function sanitizeText (text: string): string {
   return text.replace(/\.|\\[n]|\n|\r/, '');
 }

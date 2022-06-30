@@ -64,4 +64,13 @@ According to Wikitionary,
 - [x] Message when no search results
 - [x] Add loading spinner
 - [ ] Maybe add verb tense charts
+  * https://ultralingua.com/developers#ulapi-http
+    * (`server/examples/ser.json`) https://ulod.ultralingua.com/api//squarespace.php?tool=conjugations&source=es&text=ser
+    * (`server/examples/chair.json`) https://ulod.ultralingua.com/api//squarespace.php?tool=definitions&source=en&target=es&text=chair
+    * (`server/examples/them.json`) https://ulod.ultralingua.com/api//squarespace.php?tool=definitions&source=en&target=es&text=them
+    * (`server/examples/los.json`) https://ulod.ultralingua.com/api//squarespace.php?tool=definitions&source=es&target=en&text=los
+    * (`server/examples/to_sit.json`) https://ulod.ultralingua.com/api//squarespace.php?tool=definitions&source=en&target=es&text=to%20sit
+    * (`server/examples/seat.json`) https://ulod.ultralingua.com/api//squarespace.php?tool=definitions&source=en&target=es&text=seat
+    * (`server/examples/silla.json`) https://ulod.ultralingua.com/api//squarespace.php?tool=definitions&source=es&target=en&text=silla
+
 - [ ] Maybe export lemma as csv...
